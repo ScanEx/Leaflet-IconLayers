@@ -1,0 +1,21 @@
+.leaflet-iconLayers {}
+
+.leaflet-iconLayers-layer { 
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    background: #fff;
+    line-height: 80px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.leaflet-iconLayers_topleft .leaflet-iconLayers-layer { margin-right: 4px; }
+.leaflet-iconLayers_topright .leaflet-iconLayers-layer { margin-left: 4px; }
+.leaflet-iconLayers_bottomleft .leaflet-iconLayers-layer { margin-right: 4px; }
+.leaflet-iconLayers_bottomright .leaflet-iconLayers-layer { margin-left: 4px; }
+
+.leaflet-iconLayers-layer_active {}
+
+.leaflet-iconLayers-group {}
