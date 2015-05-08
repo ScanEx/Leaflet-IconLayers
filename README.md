@@ -17,7 +17,6 @@ var iconLayersControl = new L.Control.IconLayers(
             iconClass: 'sat-layer-icon' // if we want use sprite
         }
     ], {
-        sprite: 'img/sprite.png', // allows to use iconClass property
         position: 'bottomleft', // one of expanding directions depends on this
         behavior: 'previous', // may be 'previous', 'expanded' or 'first'
         expand: 'horizontal', // or 'vertical'
@@ -39,7 +38,10 @@ var layer = iconLayersControl.addLayer({
     icon: 'img/mapHybrid.png'
 });
 
-// we can remove layer by specified ILayer
+// we can modify layers list
+iconLayersControl.setLayers(layers);
+
+// or remove single layers
 iconLayersControl.removeLayer(layer); // remove 'Hybrid' layer
 iconLayersControl.removeLayer(satLayer); // remove 'Satellite' layer
 
