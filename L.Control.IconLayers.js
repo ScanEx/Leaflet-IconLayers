@@ -41,6 +41,14 @@
         return length;
     }
 
+    function prepend(parent, el) {
+        if (parent.children.length) {
+            parent.insertBefore(el, parent.children[0]);
+        } else {
+            parent.appendChild(el);
+        }
+    }
+
     L.Control.IconLayers = L.Control.extend({
         _getActiveLayer: function() {
             if (this._activeLayerId) {
@@ -92,9 +100,21 @@
 
             return behaviors[this.options.behavior].apply(this, arguments);
         },
+        _getElementByLayerId: function(id) {
+            var els = this._container.getElementsByClassName('leaflet-iconLayers-layer');
+            for (var i = 0; i < els.length; i++) {
+                if (els[i].getAttribute('data-layerid') == id) {
+                    return els[i];
+                }
+            }
+        },
+        _getLayerIdByElement: function(el) {
+            return el.getAttribute('data-layerid') / 1;
+        },
         _createLayersElements: (function() {
             function createLayerElement(layerObj) {
                 var el = L.DomUtil.create('div', 'leaflet-iconLayers-layer');
+                el.setAttribute('data-layerid', L.stamp(layerObj.layer));
                 if (layerObj.title) {
                     var titleContainerEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitleContainer');
                     var titleEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitle');
@@ -109,17 +129,27 @@
             }
 
             return function() {
+                var currentRow;
                 var layers = this._arrangeLayers();
                 for (var i = 0; i < layers.length; i++) {
-                    this._container.appendChild(createLayerElement(layers[i]));
+                    if (i % this.options.maxLayersInRow === 0) {
+                        currentRow = L.DomUtil.create('div', 'leaflet-iconLayers-layersRow');
+                        prepend(this._container, currentRow);
+                    }
+                    currentRow.appendChild(createLayerElement(layers[i]));
                 }
             };
         })(),
-        _attachEvents: (function() {
-            return function() {
-
-            };
-        })(),
+        _attachEvents: function() {
+            each(this._layers, function(l) {
+                var e = this._getElementByLayerId(L.stamp(l.layer));
+                if (e) {
+                    e.addEventListener('click', function(e) {
+                        this.setActiveLayer(l.layer);
+                    }.bind(this));
+                }
+            }.bind(this));
+        },
         _render: function() {
             this._container.innerHTML = '';
             this._createLayersElements();
