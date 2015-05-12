@@ -1,14 +1,37 @@
 .leaflet-iconLayers {}
 
 .leaflet-iconLayers-layer { 
+    cursor: pointer;
+    position: relative;
     width: 80px;
     height: 80px;
     display: inline-block;
-    background: #fff;
-    line-height: 80px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
     text-align: center;
     box-sizing: border-box;
     border: 1px solid #000;
+}
+
+.leaflet-iconLayers-layerTitleContainer {
+    display: table;
+    width: 100%;
+    background: rgba(255,255,255,0.6);
+    height: 30%;
+    padding: 0;
+    border: 0;
+    position: absolute;
+    bottom: 0%;
+    transition: bottom .35s ease;
+    /* bottom: -30%; */
+}
+
+.leaflet-iconLayers-layerTitle {
+    display: table-cell;
+    /* height: 100%; */
+    vertical-align: middle;
+    /* font-weight: bold; */
 }
 
 .leaflet-iconLayers_topleft .leaflet-iconLayers-layer { margin-right: 4px; }

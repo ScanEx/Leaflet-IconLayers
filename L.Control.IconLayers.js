@@ -11,7 +11,16 @@
         _createLayersElements: (function() {
             function createLayerElement(layerObj) {
                 var el = L.DomUtil.create('div', 'leaflet-iconLayers-layer');
-                el.innerHTML = layerObj.title;
+                if (layerObj.title) {
+                    var titleContainerEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitleContainer');
+                    var titleEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitle');
+                    titleEl.innerHTML = layerObj.title;
+                    titleContainerEl.appendChild(titleEl);
+                    el.appendChild(titleContainerEl);
+                }
+                if (layerObj.icon) {
+                    el.setAttribute('style', "background-image: url('" + layerObj.icon + "')");
+                }
                 return el;
             }
 
