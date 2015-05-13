@@ -68,17 +68,16 @@
                 return this._layers[this._previousLayerId];
             } else {
                 return find(this._layers, function(l) {
-                    return L.stamp(l.layer) !== L.stamp(activeLayer.layer);
+                    return l.id !== activeLayer.id;
                 }.bind(this)) || null;
             }
         },
         _getInactiveLayers: function() {
             var ar = [];
-            var activeLayerId = this._getActiveLayer() ? L.stamp(this._getActiveLayer().layer) : null;
-            var previousLayerId = this._getPreviousLayer() ? L.stamp(this._getPreviousLayer().layer) : null;
+            var activeLayerId = this._getActiveLayer() ? this._getActiveLayer().id : null;
+            var previousLayerId = this._getPreviousLayer() ? this._getPreviousLayer().id : null;
             each(this._layers, function(l) {
-                var id = L.stamp(l.layer);
-                if ((id !== activeLayerId) && (id !== previousLayerId)) {
+                if ((l.id !== activeLayerId) && (l.id !== previousLayerId)) {
                     ar.push(l);
                 }
             });
@@ -115,7 +114,7 @@
         _createLayersElements: function() {
             var currentRow, layerCell;
             var layers = this._arrangeLayers();
-            var activeLayerId = L.stamp(this._getActiveLayer().layer);
+            var activeLayerId = this._getActiveLayer().id;
 
             for (var i = 0; i < layers.length; i++) {
                 if (i % this.options.maxLayersInRow === 0) {
@@ -127,7 +126,7 @@
                 if (i !== 0) {
                     L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_hidden');
                 }
-                if (L.stamp(layers[i].layer) === activeLayerId) {
+                if (layers[i].id === activeLayerId) {
                     L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_active');
                 } 
                 layerCell.appendChild(layerEl);
@@ -136,7 +135,7 @@
 
             function createLayerElement(layerObj) {
                 var el = L.DomUtil.create('div', 'leaflet-iconLayers-layer');
-                el.setAttribute('data-layerid', L.stamp(layerObj.layer));
+                el.setAttribute('data-layerid', layerObj.id);
                 if (layerObj.title) {
                     var titleContainerEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitleContainer');
                     var titleEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitle');
@@ -154,19 +153,19 @@
         },
         _showLayers: function() {
             this._arrangeLayers().slice(1).map(function(l) {
-                var el = this._getElementByLayerId(L.stamp(l.layer));
+                var el = this._getElementByLayerId(l.id);
                 L.DomUtil.removeClass(el, 'leaflet-iconLayers-layer_hidden');
             }.bind(this));
         },
         _hideLayers: function() {
             this._arrangeLayers().slice(1).map(function(l) {
-                var el = this._getElementByLayerId(L.stamp(l.layer));
+                var el = this._getElementByLayerId(l.id);
                 L.DomUtil.addClass(el, 'leaflet-iconLayers-layer_hidden');
             }.bind(this));
         },
         _attachEvents: function() {
             each(this._layers, function(l) {
-                var e = this._getElementByLayerId(L.stamp(l.layer));
+                var e = this._getElementByLayerId(l.id);
                 if (e) {
                     e.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -216,12 +215,15 @@
         setLayers: function(layers) {
             this._layers = {};
             layers.map(function(layer) {
-                this._layers[L.stamp(layer.layer)] = layer;
+                var id = L.stamp(layer.layer)
+                this._layers[id] = L.extend(layer, {
+                    id: id
+                });
             }.bind(this));
             this._container && this._render();
         },
         setActiveLayer: function(layer) {
-            if (!layer || L.stamp(layer) === this._activeLayerId) {
+            if (!layer || layer.id === this._activeLayerId || !this._layers[L.stamp(layer)]) {
                 return;
             }
             this._previousLayerId = this._activeLayerId;
