@@ -129,26 +129,61 @@
             }
 
             return function() {
-                var currentRow;
+                var currentRow, layerCell;
                 var layers = this._arrangeLayers();
                 for (var i = 0; i < layers.length; i++) {
                     if (i % this.options.maxLayersInRow === 0) {
                         currentRow = L.DomUtil.create('div', 'leaflet-iconLayers-layersRow');
                         prepend(this._container, currentRow);
                     }
-                    currentRow.appendChild(createLayerElement(layers[i]));
+                    layerCell = L.DomUtil.create('div', 'leaflet-iconLayers-layerCell');
+                    var layerEl = createLayerElement(layers[i]);
+                    if (i !== 0) {
+                        L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_hidden');
+                    }
+                    layerCell.appendChild(layerEl);
+                    currentRow.appendChild(layerCell);
                 }
             };
         })(),
+        _showLayers: function() {
+            this._arrangeLayers().slice(1).map(function(l) {
+                var el = this._getElementByLayerId(L.stamp(l.layer));
+                L.DomUtil.removeClass(el, 'leaflet-iconLayers-layer_hidden');
+            }.bind(this));
+        },
+        _hideLayers: function() {
+            this._arrangeLayers().slice(1).map(function(l) {
+                var el = this._getElementByLayerId(L.stamp(l.layer));
+                L.DomUtil.addClass(el, 'leaflet-iconLayers-layer_hidden');
+            }.bind(this));
+        },
         _attachEvents: function() {
             each(this._layers, function(l) {
                 var e = this._getElementByLayerId(L.stamp(l.layer));
                 if (e) {
                     e.addEventListener('click', function(e) {
+                        e.stopPropagation();
                         this.setActiveLayer(l.layer);
+                        this._showLayers();
                     }.bind(this));
                 }
             }.bind(this));
+            var layersRowCollection = this._container.getElementsByClassName('leaflet-iconLayers-layersRow');
+            for (var i = 0; i < layersRowCollection.length; i++) {
+                var el = layersRowCollection[i];
+                el.addEventListener('mouseenter', function(e) {
+                    e.stopPropagation();
+                    this._showLayers();
+                }.bind(this));
+                el.addEventListener('mouseleave', function(e) {
+                    e.stopPropagation();
+                    this._hideLayers();
+                }.bind(this));
+                el.addEventListener('mousemove', function(e) {
+                    e.stopPropagation();
+                });
+            }
         },
         _render: function() {
             this._container.innerHTML = '';
