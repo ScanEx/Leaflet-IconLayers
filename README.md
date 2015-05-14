@@ -45,6 +45,10 @@ iconLayersControl.setLayers(layers);
 iconLayersControl.removeLayer(layer); // remove 'Hybrid' layer
 iconLayersControl.removeLayer(satLayer); // remove 'Satellite' layer
 
+// mark layers as disabled
+iconLayersControl.disableLayers(layer);
+iconLayersControl.enableLayers(layer);
+
 iconLayersControl.on({
     activelayerchange: function() {}, // active layer was switched
     layeradd: function() {}, // fired on addLayer()
