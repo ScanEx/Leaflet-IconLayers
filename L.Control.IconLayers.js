@@ -223,11 +223,12 @@
             this._container && this._render();
         },
         setActiveLayer: function(layer) {
-            if (!layer || layer.id === this._activeLayerId || !this._layers[L.stamp(layer)]) {
+            var l = layer && this._layers[L.stamp(layer)];
+            if (!l || l.id === this._activeLayerId) {
                 return;
             }
             this._previousLayerId = this._activeLayerId;
-            this._activeLayerId = L.stamp(layer);
+            this._activeLayerId = l.id;
             this._container && this._render();
             this.fire('activelayerchange', {
                 layer: layer
