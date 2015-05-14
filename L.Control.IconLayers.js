@@ -229,7 +229,9 @@
             this._previousLayerId = this._activeLayerId;
             this._activeLayerId = L.stamp(layer);
             this._container && this._render();
-            this.fire('activelayerchange');
+            this.fire('activelayerchange', {
+                layer: layer
+            });
         }
     });
 }();
