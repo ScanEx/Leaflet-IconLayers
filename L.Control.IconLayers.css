@@ -3,7 +3,7 @@
 }
 
 .leaflet-iconLayers-layersRow { display: table; pointer-events: auto; }
-.leaflet-iconLayers-layerCell { display: table-cell; padding: 2px; }
+.leaflet-iconLayers-layerCell { display: table-cell; padding: 3px; }
 
 .leaflet-iconLayers-layer {
     cursor: pointer;
@@ -15,7 +15,7 @@
     background-size: cover;
     text-align: center;
     box-sizing: border-box;
-    border: 1px solid #000;
+    box-shadow: 0 0 5px #000;
 }
 
 .leaflet-iconLayers-layerTitleContainer {
