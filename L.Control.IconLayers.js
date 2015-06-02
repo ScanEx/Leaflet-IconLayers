@@ -157,13 +157,13 @@
                 return el;
             }
         },
-        _showLayers: function() {
+        expand: function() {
             this._arrangeLayers().slice(1).map(function(l) {
                 var el = this._getElementByLayerId(l.id);
                 L.DomUtil.removeClass(el, 'leaflet-iconLayers-layer_hidden');
             }.bind(this));
         },
-        _hideLayers: function() {
+        collapse: function() {
             this._arrangeLayers().slice(1).map(function(l) {
                 var el = this._getElementByLayerId(l.id);
                 L.DomUtil.addClass(el, 'leaflet-iconLayers-layer_hidden');
@@ -176,7 +176,7 @@
                     e.addEventListener('click', function(e) {
                         e.stopPropagation();
                         this.setActiveLayer(l.layer);
-                        this._showLayers();
+                        this.expand();
                     }.bind(this));
                 }
             }.bind(this));
@@ -185,11 +185,11 @@
                 var el = layersRowCollection[i];
                 el.addEventListener('mouseenter', function(e) {
                     e.stopPropagation();
-                    this._showLayers();
+                    this.expand();
                 }.bind(this));
                 el.addEventListener('mouseleave', function(e) {
                     e.stopPropagation();
-                    this._hideLayers();
+                    this.collapse();
                 }.bind(this));
                 el.addEventListener('mousemove', function(e) {
                     e.stopPropagation();
