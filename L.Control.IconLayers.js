@@ -241,7 +241,7 @@
                 layer: layer
             });
         },
-        disableLayers: function(arg) {
+        _setDisabledLayersStyle: function(arg) {
             if (L.Util.isArray(arg)) {
                 arg.map(function(l) {
                     disableLayer.call(this, l);
@@ -256,7 +256,7 @@
                 this._disabledLayerIds.push(L.stamp(layer));
             }
         },
-        enableLayers: function(arg) {
+        _setEnabledLayersStyle: function(arg) {
             if (L.Util.isArray(arg)) {
                 arg.map(function(l) {
                     enableLayer.call(this, l);
