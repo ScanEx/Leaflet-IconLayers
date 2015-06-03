@@ -129,9 +129,6 @@
                 if (layers[i].id === activeLayerId) {
                     L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_active');
                 }
-                if (this._disabledLayerIds.indexOf(layers[i].id) + 1) {
-                    L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_disabled');
-                }
                 layerCell.appendChild(layerEl);
                 currentRow.appendChild(layerCell);
             }
@@ -209,7 +206,6 @@
             maxLayersInRow: 5
         },
         initialize: function(layers, options) {
-            this._disabledLayerIds = [];
             L.setOptions(this, options);
             this.setLayers(layers);
         },
@@ -241,38 +237,21 @@
                 layer: layer
             });
         },
-        _setDisabledLayersStyle: function(arg) {
-            if (L.Util.isArray(arg)) {
-                arg.map(function(l) {
-                    disableLayer.call(this, l);
-                }.bind(this))
-            } else {
-                disableLayer.call(this, arg);
-            }
+        _setDisabledLayersStyle: function(layers) {
+            var disabledLayerIds = layers.map(function(l) {
+                return L.stamp(l) + '';
+            });
 
-            this._container && this._render();
+            var els = this._container ? this._container.getElementsByClassName('leaflet-iconLayers-layer') : [];
 
-            function disableLayer(layer) {
-                this._disabledLayerIds.push(L.stamp(layer));
-            }
-        },
-        _setEnabledLayersStyle: function(arg) {
-            if (L.Util.isArray(arg)) {
-                arg.map(function(l) {
-                    enableLayer.call(this, l);
-                }.bind(this))
-            } else {
-                enableLayer.call(this, arg);
-            }
-
-            this._container && this._render();
-
-            function enableLayer(layer) {
-                var layerId = L.stamp(layer);
-                if (this._disabledLayerIds.indexOf(layerId) + 1) {
-                    this._disabledLayerIds.splice(this._disabledLayerIds.indexOf(layerId), 1);
+            Array.prototype.slice.call(els).map(function(el) {
+                var elId = el.getAttribute('data-layerid');
+                if (disabledLayerIds.indexOf(elId) + 1) {
+                    L.DomUtil.addClass(el, 'leaflet-iconLayers-layer_disabled');
+                } else {
+                    L.DomUtil.removeClass(el, 'leaflet-iconLayers-layer_disabled');
                 }
-            }
+            });
         }
     });
 }();
