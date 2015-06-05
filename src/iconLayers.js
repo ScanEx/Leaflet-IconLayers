@@ -111,6 +111,26 @@
         _getLayerIdByElement: function(el) {
             return el.getAttribute('data-layerid') / 1;
         },
+        _createLayerElement: function(layerObj) {
+            var el = L.DomUtil.create('div', 'leaflet-iconLayers-layer');
+            el.setAttribute('data-layerid', layerObj.id);
+            if (layerObj.title) {
+                var titleContainerEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitleContainer');
+                var titleEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitle');
+                var checkIconEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerCheckIcon');
+                var shutterEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerShutter');
+                //shutterEl.innerHTML = shutterContent;
+                titleEl.innerHTML = layerObj.title;
+                titleContainerEl.appendChild(titleEl);
+                el.appendChild(titleContainerEl);
+                el.appendChild(shutterEl);
+                el.appendChild(checkIconEl);
+            }
+            if (layerObj.icon) {
+                el.setAttribute('style', "background-image: url('" + layerObj.icon + "')");
+            }
+            return el;
+        },
         _createLayersElements: function() {
             var currentRow, layerCell;
             var layers = this._arrangeLayers();
@@ -122,7 +142,7 @@
                     prepend(this._container, currentRow);
                 }
                 layerCell = L.DomUtil.create('div', 'leaflet-iconLayers-layerCell');
-                var layerEl = createLayerElement(layers[i]);
+                var layerEl = this._createLayerElement(layers[i]);
                 if (i !== 0) {
                     L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_hidden');
                 }
@@ -131,27 +151,6 @@
                 }
                 layerCell.appendChild(layerEl);
                 currentRow.appendChild(layerCell);
-            }
-
-            function createLayerElement(layerObj) {
-                var el = L.DomUtil.create('div', 'leaflet-iconLayers-layer');
-                el.setAttribute('data-layerid', layerObj.id);
-                if (layerObj.title) {
-                    var titleContainerEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitleContainer');
-                    var titleEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitle');
-                    var checkIconEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerCheckIcon');
-                    var shutterEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerShutter');
-                    //shutterEl.innerHTML = shutterContent;
-                    titleEl.innerHTML = layerObj.title;
-                    titleContainerEl.appendChild(titleEl);
-                    el.appendChild(titleContainerEl);
-                    el.appendChild(shutterEl);
-                    el.appendChild(checkIconEl);
-                }
-                if (layerObj.icon) {
-                    el.setAttribute('style', "background-image: url('" + layerObj.icon + "')");
-                }
-                return el;
             }
         },
         expand: function() {
