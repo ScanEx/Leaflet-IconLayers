@@ -127,7 +127,7 @@
             }
             return el;
         },
-        _createLayersElements: function() {
+        _createLayerElements: function() {
             var currentRow, layerCell;
             var layers = this._arrangeLayers();
             var activeLayerId = this._getActiveLayer().id;
@@ -145,8 +145,18 @@
                 if (layers[i].id === activeLayerId) {
                     L.DomUtil.addClass(layerCell, 'leaflet-iconLayers-layerCell_active');
                 }
+                if (this._expandDirection === 'left') {
+                    L.DomUtil.addClass(layerCell, 'leaflet-iconLayers-layerCell_expandLeft');
+                } else {
+                    L.DomUtil.addClass(layerCell, 'leaflet-iconLayers-layerCell_expandRight');
+                }
                 layerCell.appendChild(this._createLayerElement(layers[i]));
-                currentRow.appendChild(layerCell);
+
+                if (this._expandDirection === 'right') {
+                    currentRow.appendChild(layerCell);
+                } else {
+                    prepend(currentRow, layerCell);
+                }
             }
         },
         expand: function() {
@@ -190,7 +200,7 @@
         },
         _render: function() {
             this._container.innerHTML = '';
-            this._createLayersElements();
+            this._createLayerElements();
             this._attachEvents();
         },
         options: {
@@ -202,6 +212,7 @@
         },
         initialize: function(layers, options) {
             L.setOptions(this, options);
+            this._expandDirection = (this.options.position.indexOf('left') != -1) ? 'right' : 'left';
             this.setLayers(layers);
         },
         onAdd: function(map) {

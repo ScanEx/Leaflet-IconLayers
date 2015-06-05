@@ -59,15 +59,32 @@
                 })
             }];
 
-            var iconLayersControl = new L.Control.IconLayers(layers);
-
-            iconLayersControl.on('activelayerchange', function(data) {
-                switchLayer(data.layer);
+            var iconLayersControlBottomLeft = new L.Control.IconLayers(layers, {
+                position: 'bottomleft'
             });
 
-            map.addControl(iconLayersControl);
+            iconLayersControlBottomLeft.on('activelayerchange', function(data) {
+                switchLayer(data.layer);
+                iconLayersControlTopRight && iconLayersControlTopRight.setActiveLayer(data.layer);
+            });
 
-            iconLayersControl.setActiveLayer(layers[0].layer);
+            map.addControl(iconLayersControlBottomLeft);
+
+            iconLayersControlBottomLeft.setActiveLayer(layers[0].layer);
+
+            var iconLayersControlTopRight = new L.Control.IconLayers(layers, {
+                position: 'topright'
+            });
+
+            iconLayersControlTopRight.on('activelayerchange', function(data) {
+                switchLayer(data.layer);
+                iconLayersControlBottomLeft && iconLayersControlBottomLeft.setActiveLayer(data.layer);
+            });
+
+            map.addControl(iconLayersControlTopRight);
+
+            iconLayersControlTopRight.setActiveLayer(layers[0].layer);
+
             switchLayer(layers[0].layer);
         </script>
     </body>

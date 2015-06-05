@@ -4,6 +4,8 @@
 
 .leaflet-iconLayers-layersRow { display: table; pointer-events: auto; }
 .leaflet-iconLayers-layerCell { display: table-cell; }
+.leaflet-iconLayers-layerCell_expandRight { padding-right: 5px; }
+.leaflet-iconLayers-layerCell_expandLeft { padding-left: 5px; }
 
 .leaflet-iconLayers-layer {
     cursor: pointer;
