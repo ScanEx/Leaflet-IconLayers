@@ -3,7 +3,7 @@
 }
 
 .leaflet-iconLayers-layersRow { display: table; pointer-events: auto; }
-.leaflet-iconLayers-layerCell { display: table-cell; padding: 3px; }
+.leaflet-iconLayers-layerCell { display: table-cell; }
 
 .leaflet-iconLayers-layer {
     cursor: pointer;
@@ -60,9 +60,9 @@
     display: none;
 }
 
-.leaflet-iconLayers-layer_hidden { display: none; }
-.leaflet-iconLayers-layer_disabled .leaflet-iconLayers-layerShutter { display: block; }
-.leaflet-iconLayers-layer_active .leaflet-iconLayers-layerCheckIcon { display: block; }
+.leaflet-iconLayers-layerCell_hidden { display: none; }
+.leaflet-iconLayers-layerCell_disabled .leaflet-iconLayers-layerShutter { display: block; }
+.leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layerCheckIcon { display: block; }
 
 /* .leaflet-iconLayers_topleft .leaflet-iconLayers-layer { margin-right: 4px; }
 .leaflet-iconLayers_topright .leaflet-iconLayers-layer { margin-left: 4px; }

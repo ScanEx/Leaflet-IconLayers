@@ -100,20 +100,16 @@
 
             return behaviors[this.options.behavior].apply(this, arguments);
         },
-        _getElementByLayerId: function(id) {
-            var els = this._container.getElementsByClassName('leaflet-iconLayers-layer');
+        _getLayerCellByLayerId: function(id) {
+            var els = this._container.getElementsByClassName('leaflet-iconLayers-layerCell');
             for (var i = 0; i < els.length; i++) {
                 if (els[i].getAttribute('data-layerid') == id) {
                     return els[i];
                 }
             }
         },
-        _getLayerIdByElement: function(el) {
-            return el.getAttribute('data-layerid') / 1;
-        },
         _createLayerElement: function(layerObj) {
             var el = L.DomUtil.create('div', 'leaflet-iconLayers-layer');
-            el.setAttribute('data-layerid', layerObj.id);
             if (layerObj.title) {
                 var titleContainerEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitleContainer');
                 var titleEl = L.DomUtil.create('div', 'leaflet-iconLayers-layerTitle');
@@ -142,32 +138,32 @@
                     prepend(this._container, currentRow);
                 }
                 layerCell = L.DomUtil.create('div', 'leaflet-iconLayers-layerCell');
-                var layerEl = this._createLayerElement(layers[i]);
+                layerCell.setAttribute('data-layerid', layers[i].id);
                 if (i !== 0) {
-                    L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_hidden');
+                    L.DomUtil.addClass(layerCell, 'leaflet-iconLayers-layerCell_hidden');
                 }
                 if (layers[i].id === activeLayerId) {
-                    L.DomUtil.addClass(layerEl, 'leaflet-iconLayers-layer_active');
+                    L.DomUtil.addClass(layerCell, 'leaflet-iconLayers-layerCell_active');
                 }
-                layerCell.appendChild(layerEl);
+                layerCell.appendChild(this._createLayerElement(layers[i]));
                 currentRow.appendChild(layerCell);
             }
         },
         expand: function() {
             this._arrangeLayers().slice(1).map(function(l) {
-                var el = this._getElementByLayerId(l.id);
-                L.DomUtil.removeClass(el, 'leaflet-iconLayers-layer_hidden');
+                var el = this._getLayerCellByLayerId(l.id);
+                L.DomUtil.removeClass(el, 'leaflet-iconLayers-layerCell_hidden');
             }.bind(this));
         },
         collapse: function() {
             this._arrangeLayers().slice(1).map(function(l) {
-                var el = this._getElementByLayerId(l.id);
-                L.DomUtil.addClass(el, 'leaflet-iconLayers-layer_hidden');
+                var el = this._getLayerCellByLayerId(l.id);
+                L.DomUtil.addClass(el, 'leaflet-iconLayers-layerCell_hidden');
             }.bind(this));
         },
         _attachEvents: function() {
             each(this._layers, function(l) {
-                var e = this._getElementByLayerId(l.id);
+                var e = this._getLayerCellByLayerId(l.id);
                 if (e) {
                     e.addEventListener('click', function(e) {
                         e.stopPropagation();
