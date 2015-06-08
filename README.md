@@ -1,26 +1,49 @@
 # Leaflet-IconLayers
-Leaflet base layers control with icons
+Leaflet base layers control with icons ([example](https://scanex.github.com/Leaflet-IconLayers/demo))
 
-### Example
+![](demo.gif)
+
+## Using Control
+
+In order to interact with layers Leaflet-IconLayers uses an array of layer objects, that have following fields:
+- `icon` - icon url (typically 80x80)
+- `title` - a short string that is displayed at the bottom of each icon
+- `layer` - any Leaflet `ILayer`
+
+You can pass this array to construtor or use `setLayers` method.
+
+The second constructor argument may be `options` hash. It is also ok if it is the only one.
+
+## Options
+
+- `maxLayersInRow` - the number of layers, that a row can contain
+
+## Methods
+
+- `setLayers(<Array> layers)` - replace layers array with a new one
+- `collapse()` - hide secondary layers
+- `expand()` - show hidden layers
+
+## Events
+
+- `activelayerchange` - fires when user changes active layer (clicks one of layer icons). The changed layer is passed in `layer` key of an event object (see an example).
+
+## Example
 ```javascript
-// new L.Control.IconLayers(layers, options)
 var iconLayersControl = new L.Control.IconLayers(
     [
         {
             title: 'Map', // use any string
             layer: mapLayer, // any ILayer
-            icon: 'img/mapIcon.png' // no resize (?)
+            icon: 'img/mapIcon.png' // 80x80 icon
         },
         {
             title: 'Satellite',
             layer: satLayer,
-            iconClass: 'sat-layer-icon' // if we want use sprite
+            icon: 'img/mapIcon.png'
         }
     ], {
-        position: 'bottomleft', // one of expanding directions depends on this
-        behavior: 'previous', // may be 'previous', 'expanded' or 'first'
-        expand: 'horizontal', // or 'vertical'
-        autoZIndex: true, // from L.Control.Layers
+        position: 'bottomleft',
         maxLayersInRow: 5
     }
 );
@@ -31,27 +54,10 @@ var iconLayersControl = new L.Control.IconLayers(
 
 iconLayersControl.addTo(map);
 
-// addLayer returns layer property
-var layer = iconLayersControl.addLayer({
-    name: 'Hybrid',
-    layer: mapHybrid,
-    icon: 'img/mapHybrid.png'
-});
-
 // we can modify layers list
 iconLayersControl.setLayers(layers);
 
-// or remove single layers
-iconLayersControl.removeLayer(layer); // remove 'Hybrid' layer
-iconLayersControl.removeLayer(satLayer); // remove 'Satellite' layer
-
-// mark layers as disabled
-iconLayersControl.disableLayers(layer);
-iconLayersControl.enableLayers(layer);
-
-iconLayersControl.on({
-    activelayerchange: function() {}, // active layer was switched
-    layeradd: function() {}, // fired on addLayer()
-    layerremove: function() {} // fired on removeLayer()
-})
+iconLayersControl.on('activelayerchange', function(e) {
+    map.addLayer(e.layer);
+});
 ```
