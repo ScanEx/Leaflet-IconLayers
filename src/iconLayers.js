@@ -135,7 +135,11 @@
             for (var i = 0; i < layers.length; i++) {
                 if (i % this.options.maxLayersInRow === 0) {
                     currentRow = L.DomUtil.create('div', 'leaflet-iconLayers-layersRow');
-                    prepend(this._container, currentRow);
+                    if (this.options.position.indexOf('bottom') === -1) {
+                        this._container.appendChild(currentRow);
+                    } else {
+                        prepend(this._container, currentRow);
+                    }
                 }
                 layerCell = L.DomUtil.create('div', 'leaflet-iconLayers-layerCell');
                 layerCell.setAttribute('data-layerid', layers[i].id);
@@ -152,7 +156,7 @@
                 }
                 layerCell.appendChild(this._createLayerElement(layers[i]));
 
-                if (this._expandDirection === 'right') {
+                if (this.options.position.indexOf('right') === -1) {
                     currentRow.appendChild(layerCell);
                 } else {
                     prepend(currentRow, layerCell);

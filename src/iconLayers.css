@@ -4,8 +4,12 @@
 
 .leaflet-iconLayers-layersRow { display: table; pointer-events: auto; }
 .leaflet-iconLayers-layerCell { display: table-cell; }
-.leaflet-iconLayers-layerCell_expandRight { padding-right: 5px; }
-.leaflet-iconLayers-layerCell_expandLeft { padding-left: 5px; }
+
+.leaflet-iconLayers_topleft .leaflet-iconLayers-layerCell, .leaflet-iconLayers_bottomleft .leaflet-iconLayers-layerCell { padding-right: 5px; }
+.leaflet-iconLayers_topright .leaflet-iconLayers-layerCell, .leaflet-iconLayers_bottomright .leaflet-iconLayers-layerCell { padding-left: 5px; }
+
+.leaflet-iconLayers_topleft .leaflet-iconLayers-layerCell, .leaflet-iconLayers_topright .leaflet-iconLayers-layerCell { padding-bottom: 5px; }
+.leaflet-iconLayers_bottomleft .leaflet-iconLayers-layerCell, .leaflet-iconLayers_bottomright .leaflet-iconLayers-layerCell { padding-top: 5px; }
 
 .leaflet-iconLayers-layer {
     cursor: pointer;
