@@ -263,3 +263,7 @@
         }
     });
 }();
+
+L.control.iconLayers = function(layers, options) {
+    return new L.Control.IconLayers(layers, options);
+};

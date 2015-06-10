@@ -33,9 +33,7 @@
                 layers.push(providers[providerId]);
             }
 
-            var iconLayersControl = new L.Control.IconLayers(layers);
-
-            map.addControl(iconLayersControl);
+            L.control.iconLayers(layers).addTo(map);
         </script>
     </body>
 </html>
