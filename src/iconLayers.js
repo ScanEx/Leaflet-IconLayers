@@ -87,15 +87,10 @@
             var behaviors = {};
 
             behaviors['previous'] = function() {
-                var activeLayer = this._getActiveLayer();
-                var previousLayer = this._getPreviousLayer();
-                if (previousLayer) {
-                    return [previousLayer, activeLayer].concat(this._getInactiveLayers());
-                } else if (activeLayer) {
-                    return [activeLayer].concat(this._getInactiveLayers());
-                } else {
-                    return null;
-                }
+                var layers = this._getInactiveLayers();
+                this._getActiveLayer() && layers.unshift(this._getActiveLayer());
+                this._getPreviousLayer() && layers.unshift(this._getPreviousLayer());
+                return layers;
             };
 
             return behaviors[this.options.behavior].apply(this, arguments);
@@ -127,7 +122,7 @@
         _createLayerElements: function() {
             var currentRow, layerCell;
             var layers = this._arrangeLayers();
-            var activeLayerId = this._getActiveLayer().id;
+            var activeLayerId = this._getActiveLayer() && this._getActiveLayer().id;
 
             for (var i = 0; i < layers.length; i++) {
                 if (i % this.options.maxLayersInRow === 0) {
