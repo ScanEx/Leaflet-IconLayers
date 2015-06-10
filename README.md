@@ -1,9 +1,16 @@
 # Leaflet-IconLayers
-Leaflet base layers control with icons ([example](https://scanex.github.com/Leaflet-IconLayers/demo))
+
+Leaflet base layers switching control with icons ([example](https://scanex.github.com/Leaflet-IconLayers/demo))
+
+Extends `L.Control`.
 
 ![](demo.gif)
 
 ## Using Control
+
+```javascript
+L.control.iconLayers(layers).addTo(map);
+```
 
 In order to interact with layers Leaflet-IconLayers uses an array of layer objects, that have following fields:
 - `icon` - icon url (typically 80x80)
@@ -17,6 +24,9 @@ The second constructor argument may be `options` hash. It is also ok if it is th
 ## Options
 
 - `maxLayersInRow` - the number of layers, that a row can contain
+- `manageLayers` - by default control manages map layers. Pass `false` if you want to manage layers manually.
+
+plus `L.Control` options (`position`)
 
 ## Methods
 
@@ -28,7 +38,7 @@ The second constructor argument may be `options` hash. It is also ok if it is th
 
 - `activelayerchange` - fires when user changes active layer (clicks one of layer icons). The changed layer is passed in `layer` key of an event object (see an example).
 
-## Example
+## Detailed example
 ```javascript
 var iconLayersControl = new L.Control.IconLayers(
     [
@@ -58,6 +68,6 @@ iconLayersControl.addTo(map);
 iconLayersControl.setLayers(layers);
 
 iconLayersControl.on('activelayerchange', function(e) {
-    map.addLayer(e.layer);
+    console.log('layer switched', e.layer);
 });
 ```
