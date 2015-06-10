@@ -187,22 +187,44 @@
             this._createLayerElements();
             this._attachEvents();
         },
+        _switchMapLayers: function() {
+            var activeLayer = this._getActiveLayer();
+            var previousLayer = this._getPreviousLayer();
+            if (previousLayer) {
+                this._map.removeLayer(previousLayer.layer);
+            } else {
+                each(this._layers, function(layerObject) {
+                    var layer = layerObject.layer;
+                    this._map.removeLayer(layer);
+                }.bind(this));
+            }
+            if (activeLayer) {
+                map.addLayer(activeLayer.layer);
+            }
+        },
         options: {
             position: 'bottomleft', // one of expanding directions depends on this
             behavior: 'previous', // may be 'previous', 'expanded' or 'first'
             expand: 'horizontal', // or 'vertical'
             autoZIndex: true, // from L.Control.Layers
-            maxLayersInRow: 5
+            maxLayersInRow: 5,
+            manageLayers: true
         },
         initialize: function(layers, options) {
             L.setOptions(this, options);
             this._expandDirection = (this.options.position.indexOf('left') != -1) ? 'right' : 'left';
+            if (this.options.manageLayers) {
+                this.on('activelayerchange', this._switchMapLayers, this);
+            }
             this.setLayers(layers);
         },
         onAdd: function(map) {
             this._container = L.DomUtil.create('div', 'leaflet-iconLayers');
             L.DomUtil.addClass(this._container, 'leaflet-iconLayers_' + this.options.position);
             this._render();
+            if (this.options.manageLayers) {
+                this._switchMapLayers();
+            }
             return this._container;
         },
         setLayers: function(layers) {

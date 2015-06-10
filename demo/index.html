@@ -26,16 +26,6 @@
     <body>
         <div id="map"></div>
         <script>
-
-            var activeLayer;
-            function switchLayer(layer) {
-                if (activeLayer) {
-                    map.removeLayer(activeLayer);
-                }
-                activeLayer = layer;
-                map.addLayer(layer);
-            }
-
             var map = L.map('map').setView([38.14, 19.33], 7);            
 
             var layers = [];
@@ -43,33 +33,9 @@
                 layers.push(providers[providerId]);
             }
 
-            var iconLayersControlBottomLeft = new L.Control.IconLayers(layers, {
-                position: 'bottomleft'
-            });
+            var iconLayersControl = new L.Control.IconLayers(layers);
 
-            iconLayersControlBottomLeft.on('activelayerchange', function(data) {
-                switchLayer(data.layer);
-                iconLayersControlTopRight && iconLayersControlTopRight.setActiveLayer(data.layer);
-            });
-
-            map.addControl(iconLayersControlBottomLeft);
-
-            iconLayersControlBottomLeft.setActiveLayer(layers[0].layer);
-
-            var iconLayersControlTopRight = new L.Control.IconLayers(layers, {
-                position: 'topright'
-            });
-
-            iconLayersControlTopRight.on('activelayerchange', function(data) {
-                switchLayer(data.layer);
-                iconLayersControlBottomLeft && iconLayersControlBottomLeft.setActiveLayer(data.layer);
-            });
-
-            map.addControl(iconLayersControlTopRight);
-
-            iconLayersControlTopRight.setActiveLayer(layers[0].layer);
-
-            switchLayer(layers[0].layer);
+            map.addControl(iconLayersControl);
         </script>
     </body>
 </html>
