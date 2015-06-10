@@ -57,20 +57,5 @@
     vertical-align: middle;
 }
 
-.leaflet-iconLayers-layerShutter {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('stroke.png');
-    opacity: .4;
-    display: none;
-}
-
 .leaflet-iconLayers-layerCell_hidden { display: none; }
-.leaflet-iconLayers-layerCell_disabled .leaflet-iconLayers-layerShutter { display: block; }
 .leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layerCheckIcon { display: block; }
-
-/* .leaflet-iconLayers_topleft .leaflet-iconLayers-layer { margin-right: 4px; }
-.leaflet-iconLayers_topright .leaflet-iconLayers-layer { margin-left: 4px; }
-.leaflet-iconLayers_bottomleft .leaflet-iconLayers-layer { margin-right: 4px; }
-.leaflet-iconLayers_bottomright .leaflet-iconLayers-layer { margin-left: 4px; } */
