@@ -31,6 +31,7 @@ plus `L.Control` options (`position`)
 ## Methods
 
 - `setLayers(<Array> layers)` - replace layers array with a new one
+- `setActiveLayer(<ILayer> layer)` - set active layer
 - `collapse()` - hide secondary layers
 - `expand()` - show hidden layers
 
