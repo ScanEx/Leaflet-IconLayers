@@ -155,15 +155,18 @@
                 }
             }
         },
+        _onLayerClick: function(e) {
+            e.stopPropagation();
+            var layerId = e.currentTarget.getAttribute('data-layerid');
+            var layer = this._layers[layerId];
+            this.setActiveLayer(layer.layer);
+            this.expand();
+        },
         _attachEvents: function() {
             each(this._layers, function(l) {
                 var e = this._getLayerCellByLayerId(l.id);
                 if (e) {
-                    e.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        this.setActiveLayer(l.layer);
-                        this.expand();
-                    }.bind(this));
+                    e.addEventListener('click', this._onLayerClick.bind(this));
                 }
             }.bind(this));
             var layersRowCollection = this._container.getElementsByClassName('leaflet-iconLayers-layersRow');
