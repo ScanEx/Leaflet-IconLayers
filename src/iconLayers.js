@@ -211,6 +211,11 @@
             manageLayers: true
         },
         initialize: function(layers, options) {
+            if (!L.Util.isArray(arguments[0])) {
+                // first argument is options
+                options = layers;
+                layers = [];
+            }
             L.setOptions(this, options);
             this._expandDirection = (this.options.position.indexOf('left') != -1) ? 'right' : 'left';
             if (this.options.manageLayers) {

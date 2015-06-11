@@ -34,7 +34,7 @@
                 layers.push(providers[providerId]);
             }
 
-            L.control.iconLayers(layers).addTo(map);
+            var ctrl = L.control.iconLayers({position: 'topright'}).addTo(map);
         </script>
     </body>
 </html>
