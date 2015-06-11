@@ -58,4 +58,5 @@
 }
 
 .leaflet-iconLayers-layerCell_hidden { display: none; }
+.leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layer { cursor: default; }
 .leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layerCheckIcon { display: block; }
