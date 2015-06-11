@@ -188,6 +188,9 @@
             this._attachEvents();
         },
         _switchMapLayers: function() {
+            if (!this._map) {
+                return;
+            }
             var activeLayer = this._getActiveLayer();
             var previousLayer = this._getPreviousLayer();
             if (previousLayer) {
@@ -199,7 +202,7 @@
                 }.bind(this));
             }
             if (activeLayer) {
-                map.addLayer(activeLayer.layer);
+                this._map.addLayer(activeLayer.layer);
             }
         },
         options: {
