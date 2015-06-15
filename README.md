@@ -2,7 +2,7 @@
 
 ![](demo.gif)
 
-Leaflet base layers switching control with icons ([example](https://scanex.github.com/Leaflet-IconLayers/demo))
+Leaflet base layers switching control with icons ([example](https://scanex.github.com/Leaflet-IconLayers/examples))
 
 *Requires Leaflet 0.7.3 or newer; IE9+*
 
