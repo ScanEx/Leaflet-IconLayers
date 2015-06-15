@@ -1,12 +1,18 @@
 # Leaflet-IconLayers
 
+![](demo.gif)
+
 Leaflet base layers switching control with icons ([example](https://scanex.github.com/Leaflet-IconLayers/demo))
+
+*Requires Leaflet 0.7.3 or newer; IE9+*
 
 Extends `L.Control`.
 
-![](demo.gif)
-
 ## Using Control
+
+Copy files from `src` dir and include them to your project.
+
+Basic usage:
 
 ```javascript
 L.control.iconLayers(layers).addTo(map);
