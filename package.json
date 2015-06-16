@@ -1,0 +1,29 @@
+{
+  "name": "leaflet-iconLayers",
+  "version": "0.1.0",
+  "description": "Leaflet control that displays base layers as small icons.",
+  "main": "src/iconLayers.js",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ScanEx/Leaflet-IconLayers.git"
+  },
+  "keywords": [
+    "leaflet"
+  ],
+  "author": {
+    "name": "Alexander Zverev",
+    "email": "alexander.zverev@gmail.com",
+    "url": "https://github.com/zverev"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ScanEx/Leaflet-IconLayers/issues"
+  },
+  "homepage": "https://github.com/ScanEx/Leaflet-IconLayers",
+  "dependencies": {
+    "leaflet": "^7.3.0"
+  }
+}
