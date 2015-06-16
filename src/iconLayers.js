@@ -233,11 +233,14 @@
             this._container = L.DomUtil.create('div', 'leaflet-iconLayers');
             L.DomUtil.addClass(this._container, 'leaflet-iconLayers_' + this.options.position);
             this._render();
-            this._map.on('click', this.collapse, this);
+            map.on('click', this.collapse, this);
             if (this.options.manageLayers) {
                 this._switchMapLayers();
             }
             return this._container;
+        },
+        onRemove: function(map) {
+            map.off('click', this.collapse, this);
         },
         setLayers: function(layers) {
             this._layers = {};
