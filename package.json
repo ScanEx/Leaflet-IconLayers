@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/ScanEx/Leaflet-IconLayers",
   "dependencies": {
-    "leaflet": "^7.3.0"
+    "leaflet": "^0.7.3"
   }
 }
