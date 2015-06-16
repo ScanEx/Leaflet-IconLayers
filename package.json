@@ -1,5 +1,5 @@
 {
-  "name": "leaflet-iconLayers",
+  "name": "leaflet-iconlayers",
   "version": "0.1.0",
   "description": "Leaflet control that displays base layers as small icons.",
   "main": "src/iconLayers.js",
