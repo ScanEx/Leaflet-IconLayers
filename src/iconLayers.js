@@ -1,4 +1,4 @@
-+ function() {
+(function() {
     function each(o, cb) {
         for (var p in o) {
             if (o.hasOwnProperty(p)) {
@@ -32,13 +32,13 @@
     }
 
     function length(o) {
-        var length = 0;
+        var l = 0;
         for (var p in o) {
             if (o.hasOwnProperty(p)) {
-                length++;
+                l++;
             }
         }
-        return length;
+        return l;
     }
 
     function prepend(parent, el) {
@@ -86,10 +86,12 @@
         _arrangeLayers: function() {
             var behaviors = {};
 
-            behaviors['previous'] = function() {
+            behaviors.previous = function() {
                 var layers = this._getInactiveLayers();
-                this._getActiveLayer() && layers.unshift(this._getActiveLayer());
-                this._getPreviousLayer() && layers.unshift(this._getPreviousLayer());
+                if(this._getActiveLayer())
+                    layers.unshift(this._getActiveLayer());
+                if(this._getPreviousLayer())
+                    layers.unshift(this._getPreviousLayer());
                 return layers;
             };
 
@@ -170,19 +172,30 @@
                 }
             }.bind(this));
             var layersRowCollection = this._container.getElementsByClassName('leaflet-iconLayers-layersRow');
+
+            var onMouseEnter = function(e) {
+                e.stopPropagation();
+                this.expand();
+            }.bind(this);
+
+            var onMouseLeave = function(e) {
+                e.stopPropagation();
+                this.collapse();
+            }.bind(this);
+
+            var stopPropagation = function(e) {
+                e.stopPropagation();
+            };
+
+            //TODO Don't make functions within a loop.
             for (var i = 0; i < layersRowCollection.length; i++) {
                 var el = layersRowCollection[i];
-                el.addEventListener('mouseenter', function(e) {
-                    e.stopPropagation();
-                    this.expand();
-                }.bind(this));
-                el.addEventListener('mouseleave', function(e) {
-                    e.stopPropagation();
-                    this.collapse();
-                }.bind(this));
-                el.addEventListener('mousemove', function(e) {
-                    e.stopPropagation();
-                });
+
+                el.addEventListener('mouseenter', onMouseEnter);
+
+                el.addEventListener('mouseleave', onMouseLeave);
+
+                el.addEventListener('mousemove', stopPropagation);
             }
         },
         _render: function() {
@@ -245,12 +258,13 @@
         setLayers: function(layers) {
             this._layers = {};
             layers.map(function(layer) {
-                var id = L.stamp(layer.layer)
+                var id = L.stamp(layer.layer);
                 this._layers[id] = L.extend(layer, {
                     id: id
                 });
             }.bind(this));
-            this._container && this._render();
+            if(this._container)
+                this._render();
         },
         setActiveLayer: function(layer) {
             var l = layer && this._layers[L.stamp(layer)];
@@ -259,7 +273,8 @@
             }
             this._previousLayerId = this._activeLayerId;
             this._activeLayerId = l.id;
-            this._container && this._render();
+            if(this._container)
+                this._render();
             this.fire('activelayerchange', {
                 layer: layer
             });
@@ -277,7 +292,7 @@
             }.bind(this));
         }
     });
-}();
+})();
 
 L.control.iconLayers = function(layers, options) {
     return new L.Control.IconLayers(layers, options);
