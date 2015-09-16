@@ -39,15 +39,6 @@ providers['Stamen_Toner'] = {
     })
 };
 
-providers['Esri_WorldTerrain'] = {
-    title: 'esri terrain',
-    icon: 'icons/esri_worldterrain.png',
-    layer: L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
-        maxZoom: 13
-    })
-};
-
 providers['Esri_OceanBasemap'] = {
     title: 'esri ocean',
     icon: 'icons/esri_oceanbasemap.png',
