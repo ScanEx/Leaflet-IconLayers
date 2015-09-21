@@ -32,13 +32,13 @@
     }
 
     function length(o) {
-        var l = 0;
+        var length = 0;
         for (var p in o) {
             if (o.hasOwnProperty(p)) {
-                l++;
+                length++;
             }
         }
-        return l;
+        return length;
     }
 
     function prepend(parent, el) {
@@ -48,7 +48,6 @@
             parent.appendChild(el);
         }
     }
-
     L.Control.IconLayers = L.Control.extend({
         includes: L.Mixin.Events,
         _getActiveLayer: function() {
@@ -85,16 +84,16 @@
         },
         _arrangeLayers: function() {
             var behaviors = {};
-
             behaviors.previous = function() {
                 var layers = this._getInactiveLayers();
-                if(this._getActiveLayer())
+                if (this._getActiveLayer()) {
                     layers.unshift(this._getActiveLayer());
-                if(this._getPreviousLayer())
+                }
+                if (this._getPreviousLayer()) {
                     layers.unshift(this._getPreviousLayer());
+                }
                 return layers;
             };
-
             return behaviors[this.options.behavior].apply(this, arguments);
         },
         _getLayerCellByLayerId: function(id) {
@@ -117,7 +116,7 @@
                 el.appendChild(checkIconEl);
             }
             if (layerObj.icon) {
-                el.setAttribute('style', "background-image: url('" + layerObj.icon + "')");
+                el.setAttribute('style', 'background-image: url(\'' + layerObj.icon + '\')');
             }
             return el;
         },
@@ -190,11 +189,8 @@
             //TODO Don't make functions within a loop.
             for (var i = 0; i < layersRowCollection.length; i++) {
                 var el = layersRowCollection[i];
-
                 el.addEventListener('mouseenter', onMouseEnter);
-
                 el.addEventListener('mouseleave', onMouseLeave);
-
                 el.addEventListener('mousemove', stopPropagation);
             }
         },
@@ -263,8 +259,9 @@
                     id: id
                 });
             }.bind(this));
-            if(this._container)
+            if (this._container) {
                 this._render();
+            }
         },
         setActiveLayer: function(layer) {
             var l = layer && this._layers[L.stamp(layer)];
@@ -273,8 +270,9 @@
             }
             this._previousLayerId = this._activeLayerId;
             this._activeLayerId = l.id;
-            if(this._container)
+            if (this._container) {
                 this._render();
+            }
             this.fire('activelayerchange', {
                 layer: layer
             });

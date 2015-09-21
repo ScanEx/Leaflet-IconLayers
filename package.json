@@ -27,6 +27,7 @@
     "leaflet": "^0.7.3"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^1.0.0"
   }
 }
