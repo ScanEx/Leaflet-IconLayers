@@ -9,7 +9,7 @@
   },
   "scripts": {
     "examples": "browserify -v examples/browserify.js > examples/browserify_bundle.js",
-    "prepublish": "gulp"
+    "prepublish": "gulp && npm run examples"
   },
   "repository": {
     "type": "git",
