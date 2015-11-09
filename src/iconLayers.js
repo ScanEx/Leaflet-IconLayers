@@ -1,4 +1,11 @@
-(function() {
+(function(factory) {
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = factory(require('leaflet'));
+    } else {
+        window.L.control.iconLayers = factory(window.L);
+        window.L.Control.IconLayers = window.L.control.iconLayers.Constructor;
+    }
+})(function(L) {
     function each(o, cb) {
         for (var p in o) {
             if (o.hasOwnProperty(p)) {
@@ -48,7 +55,8 @@
             parent.appendChild(el);
         }
     }
-    L.Control.IconLayers = L.Control.extend({
+
+    var IconLayers = L.Control.extend({
         includes: L.Mixin.Events,
         _getActiveLayer: function() {
             if (this._activeLayerId) {
@@ -290,8 +298,12 @@
             }.bind(this));
         }
     });
-})();
 
-L.control.iconLayers = function(layers, options) {
-    return new L.Control.IconLayers(layers, options);
-};
+    var iconLayers = function(layers, options) {
+        return new IconLayers(layers, options);
+    };
+
+    iconLayers.Constructor = IconLayers;
+
+    return iconLayers;
+});
