@@ -2,12 +2,14 @@
   "name": "leaflet-iconlayers",
   "version": "0.2.0",
   "description": "Leaflet control that displays base layers as small icons.",
-  "main": "src/iconLayers.js",
+  "main": "dist/iconLayers.js",
+  "style": "dist/iconLayers.css",
   "directories": {
     "example": "examples"
   },
   "scripts": {
-    "examples": "browserify -v examples/browserify.js > examples/browserify_bundle.js"
+    "examples": "browserify -v examples/browserify.js > examples/browserify_bundle.js",
+    "prepublish": "gulp"
   },
   "repository": {
     "type": "git",
