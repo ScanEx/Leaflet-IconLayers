@@ -16,7 +16,7 @@
         "no-console": 0,
         "no-shadow": 0,
         "indent": [2, 4],
-        "linebreak-style": [2],
+        "linebreak-style": [2, "windows"],
         "semi": [2, "always"],
         "curly": 2
     },
