@@ -2,6 +2,5 @@ node_modules
 bower_components
 *.sublime-project
 *.sublime-workspace
-dist
 *_bundle.js
 *.log
